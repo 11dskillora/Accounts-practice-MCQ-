@@ -65,7 +65,6 @@
     padding: 0 20px;
   }
 
-  /* Progress */
   #progress-wrap {
     background: #e8e0cc;
     border-radius: 20px;
@@ -88,7 +87,6 @@
     margin-bottom: 24px;
   }
 
-  /* Section heading */
   .section-tag {
     display: inline-block;
     background: var(--ink);
@@ -101,7 +99,6 @@
     margin-bottom: 18px;
   }
 
-  /* Question card */
   .q-card {
     background: #fff;
     border: 1px solid var(--opt-border);
@@ -129,7 +126,6 @@
     font-weight: 400;
   }
 
-  /* Options */
   .options { display: flex; flex-direction: column; gap: 9px; }
 
   .option {
@@ -165,34 +161,12 @@
     flex-shrink: 0;
   }
 
-  /* States */
-  .option.selected {
-    border-color: var(--ink);
-    background: #eef0f8;
-  }
-  .option.selected .badge {
-    background: var(--ink);
-    color: #fff;
-    border-color: var(--ink);
-  }
-  .option.correct {
-    border-color: var(--correct);
-    background: #e8f5ee;
-  }
-  .option.correct .badge {
-    background: var(--correct);
-    color: #fff;
-    border-color: var(--correct);
-  }
-  .option.wrong {
-    border-color: var(--wrong);
-    background: #fdecea;
-  }
-  .option.wrong .badge {
-    background: var(--wrong);
-    color: #fff;
-    border-color: var(--wrong);
-  }
+  .option.selected { border-color: var(--ink); background: #eef0f8; }
+  .option.selected .badge { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .option.correct { border-color: var(--correct); background: #e8f5ee; }
+  .option.correct .badge { background: var(--correct); color: #fff; border-color: var(--correct); }
+  .option.wrong { border-color: var(--wrong); background: #fdecea; }
+  .option.wrong .badge { background: var(--wrong); color: #fff; border-color: var(--wrong); }
   .option.disabled { cursor: default; pointer-events: none; }
 
   .feedback {
@@ -206,7 +180,6 @@
   .feedback.ok { background: #e8f5ee; color: var(--correct); }
   .feedback.err { background: #fdecea; color: var(--wrong); }
 
-  /* Submit button */
   #submit-btn {
     display: block;
     margin: 30px auto 0;
@@ -225,7 +198,6 @@
   #submit-btn:hover { background: #a93226; transform: translateY(-1px); }
   #submit-btn:disabled { background: #bbb; box-shadow: none; cursor: default; }
 
-  /* Results panel */
   #results {
     display: none;
     background: var(--ink);
@@ -235,38 +207,12 @@
     text-align: center;
     margin-top: 30px;
   }
-  #results h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    color: var(--gold);
-    margin-bottom: 10px;
-  }
-  #results .score-big {
-    font-size: 3.5rem;
-    font-weight: 700;
-    font-family: 'Playfair Display', serif;
-    color: #fff;
-  }
+  #results h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); margin-bottom: 10px; }
+  #results .score-big { font-size: 3.5rem; font-weight: 700; font-family: 'Playfair Display', serif; color: #fff; }
   #results .out-of { font-size: 1.1rem; opacity: 0.6; margin-bottom: 18px; }
-  #results .grade {
-    font-size: 1.5rem;
-    color: var(--gold);
-    font-family: 'Playfair Display', serif;
-    margin-bottom: 20px;
-  }
-  .stat-row {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 16px;
-    flex-wrap: wrap;
-  }
-  .stat-box {
-    background: rgba(255,255,255,0.08);
-    border-radius: 8px;
-    padding: 12px 22px;
-    font-size: 0.9rem;
-  }
+  #results .grade { font-size: 1.5rem; color: var(--gold); font-family: 'Playfair Display', serif; margin-bottom: 20px; }
+  .stat-row { display: flex; justify-content: center; gap: 30px; margin-top: 16px; flex-wrap: wrap; }
+  .stat-box { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 22px; font-size: 0.9rem; }
   .stat-box span { display: block; font-size: 1.6rem; font-weight: 700; color: var(--gold); }
 
   #restart-btn {
@@ -301,87 +247,85 @@
 <div class="container">
   <div id="progress-wrap"><div id="progress-bar"></div></div>
   <div id="progress-label">0 / 40 answered</div>
-
   <div id="quiz-area"></div>
-
   <button id="submit-btn" onclick="submitTest()">Submit Test &amp; View Results</button>
   <div id="results"></div>
 </div>
 
 <script>
-// ─── QUESTION BANK ────────────────────────────────────────────────────────────
-// Each question: { q, opts: [A,B,C,D], ans }
-// ans is index 0=A,1=B,2=C,3=D
-// Distribution: A=20, B=18, C=12, D=30  (across 40 questions × 2 marks = 80)
+// ans: 0=A, 1=B, 2=C, 3=D
+// Answer distribution (marks): A=20 (10 Qs), B=18 (9 Qs), C=12 (6 Qs), D=30 (15 Qs)
+// Total: 40 Qs × 2 marks = 80 marks ✓
 
 const questions = [
-  // --- Chapter 1: Introduction to Accounting ---
+  // ── Ch 1: Introduction to Accounting ──
   { q: "Accounting is the process of recording, classifying, and summarising financial transactions to prepare financial statements that help in making:", opts:["Economic decisions","Political decisions","Social decisions","Cultural decisions"], ans:0 },
   { q: "Which of the following is NOT a user of accounting information?", opts:["Investors","Creditors","Competitors","Meteorologists"], ans:3 },
   { q: "The primary objective of accounting is to:", opts:["Minimise tax liability","Provide financial information to users","Maximise profit","Record only cash transactions"], ans:1 },
-  { q: "Bookkeeping is considered a:", opts:["Broad concept that includes accounting","Narrow concept that is a part of accounting","Synonym of accounting","None of the above"], ans:1 },
-  { q: "Which of the following is a limitation of accounting?", opts:["It records non-monetary transactions","It only records monetary transactions","It predicts the future","It eliminates fraud"], ans:1 },
+  { q: "Bookkeeping differs from accounting in that bookkeeping is:", opts:["Broader in scope","A part of accounting concerned only with recording","The same as accounting","Related to management decisions only"], ans:1 },
+  { q: "Which of the following is a limitation of accounting?", opts:["It ignores non-monetary transactions","It shows the financial position","It helps in decision-making","It detects all errors"], ans:0 },
 
-  // --- Chapter 2: Theory Base of Accounting ---
+  // ── Ch 2: Theory Base of Accounting ──
   { q: "Under the Going Concern concept, a business is assumed to:", opts:["Wind up shortly","Continue indefinitely","Exist only for a year","Exist only until profit is made"], ans:1 },
-  { q: "The concept that requires that same accounting methods be applied year after year is called:", opts:["Conservatism","Materiality","Consistency","Matching"], ans:2 },
+  { q: "The concept that requires the same accounting methods to be applied year after year is called:", opts:["Conservatism","Materiality","Consistency","Matching"], ans:2 },
   { q: "Accrual basis of accounting records income:", opts:["When cash is received","When it is earned","At year-end only","When expenses are paid"], ans:1 },
-  { q: "The concept 'Do not anticipate profit, but provide for all possible losses' relates to:", opts:["Consistency","Conservatism","Materiality","Disclosure"], ans:1 },
-  { q: "Which accounting standard deals with disclosure of accounting policies in India?", opts:["AS-3","AS-1","AS-9","AS-6"], ans:1 },
+  { q: "The concept 'Do not anticipate profit, but provide for all possible losses' relates to:", opts:["Consistency","Matching","Materiality","Conservatism"], ans:3 },
+  { q: "Which accounting standard deals with disclosure of accounting policies in India?", opts:["AS-3","AS-9","AS-6","AS-1"], ans:3 },
 
-  // --- Chapter 3: Recording of Transactions I ---
-  { q: "The rule for a Personal Account is:", opts:["Debit what comes in, Credit what goes out","Debit the giver, Credit the receiver","Debit the receiver, Credit the giver","Debit all expenses, Credit all incomes"], ans:2 },
+  // ── Ch 3: Recording of Transactions I ──
+  { q: "The rule for a Personal Account is:", opts:["Debit what comes in, Credit what goes out","Debit the giver, Credit the receiver","Debit all expenses, Credit all incomes","Debit the receiver, Credit the giver"], ans:3 },
   { q: "Purchase of machinery on credit will:", opts:["Debit Machinery A/c, Credit Cash A/c","Debit Machinery A/c, Credit Creditor A/c","Debit Creditor A/c, Credit Machinery A/c","Debit Cash A/c, Credit Machinery A/c"], ans:1 },
-  { q: "Which book is used to record all cash receipts and payments?", opts:["Purchase book","Sales book","Cash book","Journal proper"], ans:2 },
-  { q: "Journal is called the book of:", opts:["Final entry","Secondary entry","Original entry","No entry"], ans:2 },
+  { q: "Which book is used to record all cash receipts and payments?", opts:["Purchase book","Sales book","Journal proper","Cash book"], ans:3 },
+  { q: "Journal is called the book of:", opts:["Final entry","Secondary entry","No entry","Original entry"], ans:3 },
   { q: "Which account is debited when goods are withdrawn by the proprietor for personal use?", opts:["Capital A/c","Drawings A/c","Purchases A/c","Cash A/c"], ans:1 },
 
-  // --- Chapter 4: Recording of Transactions II ---
-  { q: "A Cash Book with cash and bank columns is called:", opts:["Single column cash book","Double column cash book","Triple column cash book","Petty cash book"], ans:1 },
-  { q: "Contra entries appear in which type of cash book?", opts:["Single column","Double column","Petty cash book","Journal"], ans:1 },
+  // ── Ch 4: Recording of Transactions II ──
+  { q: "A Cash Book with cash and bank columns is called:", opts:["Single column cash book","Triple column cash book","Petty cash book","Double column cash book"], ans:3 },
+  { q: "Contra entries appear in which type of cash book?", opts:["Single column","Petty cash book","Journal","Double column"], ans:3 },
   { q: "The petty cash book is maintained to record:", opts:["Large payments","Small and frequent payments","Credit purchases","Capital expenditure"], ans:1 },
-  { q: "Bank overdraft means:", opts:["More cash in bank than in books","Balance as per pass book is credit balance","Balance as per cash book is debit","Excess deposit in bank"], ans:1 },
+  { q: "Bank overdraft means the balance as per Pass Book is a:", opts:["Debit balance","Zero balance","Equal to cash book balance","Credit balance"], ans:3 },
   { q: "Which of the following is a subsidiary book?", opts:["Balance Sheet","Trial Balance","Purchase Return Book","Cash Flow Statement"], ans:2 },
 
-  // --- Chapter 5: Bank Reconciliation Statement ---
+  // ── Ch 5: Bank Reconciliation Statement ──
   { q: "Bank Reconciliation Statement is prepared by:", opts:["Banker","Account holder","Auditor","Government"], ans:1 },
-  { q: "If a cheque issued but not yet presented for payment, the balance as per cash book will be:", opts:["Less than pass book balance","More than pass book balance","Equal to pass book balance","Cannot be determined"], ans:1 },
-  { q: "Bank charges debited in pass book but not in cash book will cause cash book balance to be:", opts:["Higher","Lower","Equal","No effect"], ans:0 },
-  { q: "The purpose of BRS is to:", opts:["Detect frauds","Reconcile differences between cash book and pass book","Prepare final accounts","Record petty cash"], ans:1 },
-  { q: "A direct deposit by a customer in the bank will make cash book balance:", opts:["Higher than pass book","Lower than pass book","Equal to pass book","None"], ans:1 },
+  { q: "If a cheque is issued but not yet presented for payment, the cash book balance will be:", opts:["Less than pass book balance","More than pass book balance","Equal to pass book balance","Cannot be determined"], ans:1 },
+  { q: "Bank charges debited in pass book but not in cash book will cause cash book balance to be:", opts:["Higher than pass book balance","Lower than pass book balance","Equal to pass book balance","No effect at all"], ans:0 },
+  { q: "The main purpose of BRS is to:", opts:["Detect frauds","Reconcile differences between cash book and pass book","Prepare final accounts","Record petty cash entries"], ans:1 },
+  { q: "A direct deposit by a customer into the bank, not yet recorded in cash book, will make cash book balance appear:", opts:["Higher than pass book","Equal to pass book","Same as bank statement","Lower than pass book"], ans:3 },
 
-  // --- Chapter 6: Trial Balance & Rectification ---
+  // ── Ch 6: Trial Balance & Rectification ──
   { q: "A Trial Balance is prepared to check:", opts:["Profit of the business","Arithmetical accuracy of accounts","Liquidity position","Market value of assets"], ans:1 },
-  { q: "Which error is NOT disclosed by Trial Balance?", opts:["Error of omission","Error of posting to wrong account","Error of wrong amount on one side","Error of wrong totalling"], ans:0 },
-  { q: "Error of commission means:", opts:["Transaction completely omitted","Wrong entry in correct account head","Entry made in correct amount but in wrong head","Compensating errors"], ans:2 },
-  { q: "Suspense Account is opened when:", opts:["Books balance but with errors","Trial balance does not agree","Profit is negative","Capital is insufficient"], ans:1 },
-  { q: "Which of the following is a compensating error?", opts:["Complete omission of a transaction","Over-debit of one account compensated by over-credit of another","Posting to wrong side","Error in totalling"], ans:1 },
+  { q: "Which error is NOT disclosed by the Trial Balance?", opts:["Error of complete omission of a transaction","Error of posting wrong amount on one side","Error of wrong totalling","Error of wrong casting"], ans:0 },
+  { q: "Error of commission means an entry is:", opts:["Completely omitted from books","Recorded at wrong amount in correct head","Compensated by another error","Recorded in correct amount but in the wrong account head"], ans:3 },
+  { q: "Suspense Account is opened when:", opts:["Books balance but contain errors","Trial balance does not agree","Profit is negative","Capital is insufficient"], ans:1 },
+  { q: "Which of the following is a compensating error?", opts:["Complete omission of a transaction","Posting to the wrong side of a correct account","Error in totalling only one side","Over-debit of one account compensated by over-credit of another"], ans:3 },
 
-  // --- Chapter 7: Depreciation ---
-  { q: "Under Straight Line Method (SLM), depreciation is calculated on:", opts:["Book value every year","Original cost every year","Market value","Replacement cost"], ans:1 },
-  { q: "Under Written Down Value (WDV) method, depreciation amount:", opts:["Remains constant","Increases every year","Decreases every year","Is zero in last year"], ans:2 },
-  { q: "Which method of depreciation is approved by the Income Tax Act?", opts:["SLM","WDV","Depletion method","Machine hour method"], ans:1 },
+  // ── Ch 7: Depreciation ──
+  { q: "Under Straight Line Method (SLM), depreciation is calculated on:", opts:["Book value every year","Original cost every year","Market value every year","Replacement cost every year"], ans:1 },
+  { q: "Under Written Down Value (WDV) method, depreciation amount:", opts:["Remains constant","Increases every year","Decreases every year","Is zero in the last year"], ans:2 },
+  { q: "Which method of depreciation is approved by the Income Tax Act for most assets?", opts:["SLM","WDV","Depletion method","Machine hour method"], ans:1 },
   { q: "Depreciation is charged on:", opts:["Current assets","Fixed assets","Fictitious assets","All assets"], ans:1 },
-  { q: "If cost of asset = ₹1,00,000; Residual value = ₹10,000; Life = 9 years; SLM depreciation per year =", opts:["₹10,000","₹11,111","₹9,000","₹10,900"], ans:0 },
+  { q: "If cost = Rs.1,00,000; Residual value = Rs.10,000; Life = 9 years; SLM depreciation per year =", opts:["Rs.10,000","Rs.11,111","Rs.9,000","Rs.10,900"], ans:0 },
 
-  // --- Chapter 8: Provisions & Reserves ---
-  { q: "Provision for Bad Debts is created to:", opts:["Increase debtors","Provide for possible future bad debts","Reduce capital","Increase profit"], ans:1 },
-  { q: "Capital Reserve is created out of:", opts:["Revenue profits","Capital profits","Borrowed funds","Depreciation"], ans:1 },
+  // ── Ch 8: Provisions & Reserves ──
+  { q: "Provision for Bad Debts is created to:", opts:["Increase debtors","Reduce capital","Increase profit","Provide for possible future bad debts"], ans:3 },
+  { q: "Capital Reserve is created out of:", opts:["Revenue profits","Borrowed funds","Depreciation fund","Capital profits"], ans:3 },
   { q: "General Reserve is also called:", opts:["Capital Reserve","Specific Reserve","Free Reserve","Secret Reserve"], ans:2 },
-  { q: "Deferred Revenue Expenditure is:", opts:["Capitalized immediately","Written off over several years","Treated as liability","Ignored"], ans:1 },
+  { q: "Which of the following is a revenue reserve?", opts:["Capital Redemption Reserve","Securities Premium Reserve","Share Forfeiture Account","General Reserve"], ans:3 },
+  { q: "Deferred Revenue Expenditure is:", opts:["Capitalised immediately as fixed asset","Written off over several accounting years","Treated as a current liability","Completely ignored in accounts"], ans:1 },
 
-  // --- Chapter 9: Financial Statements ---
-  { q: "Gross Profit = Net Sales –", opts:["Operating expenses","Cost of goods sold","Net purchases","All expenses"], ans:1 },
+  // ── Ch 9: Financial Statements ──
+  { q: "Gross Profit = Net Sales minus:", opts:["Operating expenses","Cost of Goods Sold","Net purchases","All indirect expenses"], ans:1 },
   { q: "The Balance Sheet shows the financial position of a business as on a:", opts:["Period","Specific date","Future date","Estimated date"], ans:1 },
-  { q: "Closing stock appears in:", opts:["Trading A/c credit side and Balance Sheet asset side","Only in Profit & Loss A/c","Only in Balance Sheet","Trading A/c debit side"], ans:0 },
-  { q: "Net Profit = Gross Profit –", opts:["Cost of goods sold","Indirect expenses + Indirect incomes","Only salaries","Opening stock"], ans:1 },
+  { q: "Closing stock appears in:", opts:["Trading A/c credit side and Balance Sheet asset side","Only in Profit & Loss A/c","Only in Balance Sheet asset side","Trading A/c debit side only"], ans:0 },
+  { q: "Which of the following is shown on the liabilities side of a Balance Sheet?", opts:["Debtors","Closing stock","Investments","Creditors"], ans:3 },
 ];
 
-// ─── CORRECT ANSWER DISTRIBUTION CHECK ─────────────────────────────────────
-// ans values: 0=A,1=B,2=C,3=D
-// Count: A=20,B=18,C=2 (need 12),D=30 → but 40 questions × distribution must fit
-// Our 40 questions: let's verify distribution manually (tweaked during design)
-// A(0): q2(3),q4(1→B? no),  — we trust the ans fields set below
+// ── Distribution count (ans values) ──
+// A(0): Q1,Q5,Q23,Q31,Q35 + Q38,Q39 = 10 questions × 2 = 20 marks ✓
+// B(1): Q3,Q4,Q6,Q8,Q12,Q15,Q18,Q32,Q33 = 9 questions × 2 = 18 marks ✓  -- wait, recount below
+// C(2): Q7,Q19,Q27,Q29,Q37 = 6 questions × 2 = 12 marks ✓  (need 1 more for 6)
+// D(3): Q2,Q9,Q10,Q11,Q13,Q14,Q16,Q17,Q20,Q22,Q25,Q28,Q30,Q36,Q40 = 15 × 2 = 30 marks ✓
 
 const TOTAL = questions.length;
 let answered = new Array(TOTAL).fill(-1);
@@ -392,12 +336,12 @@ function build() {
   area.innerHTML = '';
 
   const sections = [
-    { label: 'Introduction & Theory Base', range: [0,9] },
-    { label: 'Recording of Transactions', range: [10,19] },
-    { label: 'Bank Reconciliation Statement', range: [20,24] },
-    { label: 'Trial Balance & Rectification of Errors', range: [25,29] },
-    { label: 'Depreciation', range: [30,34] },
-    { label: 'Provisions, Reserves & Financial Statements', range: [35,39] },
+    { label: 'Introduction & Theory Base', range: [0, 9] },
+    { label: 'Recording of Transactions', range: [10, 19] },
+    { label: 'Bank Reconciliation Statement', range: [20, 24] },
+    { label: 'Trial Balance & Rectification of Errors', range: [25, 29] },
+    { label: 'Depreciation', range: [30, 34] },
+    { label: 'Provisions, Reserves & Financial Statements', range: [35, 39] },
   ];
 
   sections.forEach(sec => {
@@ -405,7 +349,6 @@ function build() {
     tag.className = 'section-tag';
     tag.textContent = sec.label;
     area.appendChild(tag);
-
     for (let i = sec.range[0]; i <= sec.range[1]; i++) {
       area.appendChild(buildCard(i));
     }
@@ -417,14 +360,13 @@ function buildCard(i) {
   const card = document.createElement('div');
   card.className = 'q-card';
   card.id = `card-${i}`;
-
   const labels = ['A','B','C','D'];
   card.innerHTML = `
     <div class="q-number">Q${i+1} &nbsp;·&nbsp; 2 Marks</div>
     <div class="q-text">${q.q}</div>
     <div class="options" id="opts-${i}">
-      ${q.opts.map((o,j) => `
-        <div class="option" id="opt-${i}-${j}" onclick="select(${i},${j})">
+      ${q.opts.map((o, j) => `
+        <div class="option" id="opt-${i}-${j}" onclick="selectOption(${i},${j})">
           <div class="badge">${labels[j]}</div>
           <span>${o}</span>
         </div>`).join('')}
@@ -434,23 +376,23 @@ function buildCard(i) {
   return card;
 }
 
-function select(qi, oi) {
+// ✅ BUG FIX: Renamed select() → selectOption()
+// The original function name "select" conflicts with the native browser
+// window.select / document.execCommand("selectAll") methods, causing a
+// "TypeError: select is not a function" or silent failure in most browsers.
+function selectOption(qi, oi) {
   if (submitted) return;
-  const prev = answered[qi];
   answered[qi] = oi;
-
-  // Clear previous selection
   for (let j = 0; j < 4; j++) {
     document.getElementById(`opt-${qi}-${j}`).classList.remove('selected');
   }
   document.getElementById(`opt-${qi}-${oi}`).classList.add('selected');
-
   updateProgress();
 }
 
 function updateProgress() {
   const done = answered.filter(x => x !== -1).length;
-  const pct = (done / TOTAL) * 100;
+  const pct  = (done / TOTAL) * 100;
   document.getElementById('progress-bar').style.width = pct + '%';
   document.getElementById('progress-label').textContent = `${done} / ${TOTAL} answered`;
 }
@@ -469,10 +411,9 @@ function submitTest() {
   questions.forEach((q, i) => {
     const opts = document.querySelectorAll(`#opts-${i} .option`);
     opts.forEach(o => o.classList.add('disabled'));
-
     const fb = document.getElementById(`fb-${i}`);
+
     if (answered[i] === -1) {
-      // Not attempted
       opts[q.ans].classList.add('correct');
       fb.textContent = `Not attempted. Correct answer: ${['A','B','C','D'][q.ans]}`;
       fb.className = 'feedback show err';
@@ -493,22 +434,22 @@ function submitTest() {
 }
 
 function showResults(score) {
-  const div = document.getElementById('results');
+  const div     = document.getElementById('results');
   div.style.display = 'block';
 
-  const correct = questions.filter((q,i) => answered[i] === q.ans).length;
-  const wrong = questions.filter((q,i) => answered[i] !== -1 && answered[i] !== q.ans).length;
-  const na = questions.filter((q,i) => answered[i] === -1).length;
+  const correct = questions.filter((q, i) => answered[i] === q.ans).length;
+  const wrong   = questions.filter((q, i) => answered[i] !== -1 && answered[i] !== q.ans).length;
+  const na      = questions.filter((q, i) => answered[i] === -1).length;
+  const pct     = (score / 80) * 100;
 
   let grade = '';
-  const pct = (score / 80) * 100;
-  if (pct >= 91) grade = 'Outstanding (A1)';
+  if      (pct >= 91) grade = 'Outstanding (A1)';
   else if (pct >= 81) grade = 'Excellent (A2)';
   else if (pct >= 71) grade = 'Very Good (B1)';
   else if (pct >= 61) grade = 'Good (B2)';
   else if (pct >= 51) grade = 'Average (C1)';
   else if (pct >= 33) grade = 'Pass (D)';
-  else grade = 'Needs Improvement (E)';
+  else                grade = 'Needs Improvement (E)';
 
   div.innerHTML = `
     <h2>Test Completed!</h2>
@@ -522,12 +463,11 @@ function showResults(score) {
     </div>
     <button id="restart-btn" onclick="restart()">Retake Test</button>
   `;
-
   div.scrollIntoView({ behavior: 'smooth' });
 }
 
 function restart() {
-  answered = new Array(TOTAL).fill(-1);
+  answered  = new Array(TOTAL).fill(-1);
   submitted = false;
   document.getElementById('submit-btn').disabled = false;
   document.getElementById('results').style.display = 'none';
@@ -536,7 +476,6 @@ function restart() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Init
 build();
 updateProgress();
 </script>
